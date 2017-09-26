@@ -15,6 +15,9 @@ import random
 #variables
 size = 5
 board = []
+monster = None
+door = None
+player = None
 
 
 def draw_board(size):
@@ -25,6 +28,8 @@ def draw_board(size):
     print(board)
 
 def set_locations():
+    global monster, door, player
+
     monster = random.choice(board)
     door = random.choice(board)
     player = random.choice(board)
@@ -52,6 +57,7 @@ def check_move_input(move):
 
 
 def move_player(locs, move):
+    global player
     player_loc = locs[2]
 
     #Right = col + 1
@@ -70,7 +76,12 @@ def move_player(locs, move):
         
 
     #check valid move
-    print(player_loc)
+    if player_loc in board:
+        player = player_loc
+        get_locations()
+        print("Player has moved.")
+    else:
+        print("That is not a valid move.")
 
 
 # MAIN LOOP
@@ -79,11 +90,10 @@ def start_game():
     #later - can let player set board size
     draw_board(size)
 
-    locs = set_locations()
-
-    print(locs)
+    set_locations()
 
     while True:
+        locs = get_locations()
         print("You're currently in room {}.".format(locs[2]))
         print("Select a move: RIGHT, LEFT, UP, DOWN\n")
 
