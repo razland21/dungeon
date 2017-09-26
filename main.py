@@ -28,4 +28,29 @@ def get_locations():
     return monster, door, player
 
 
-draw_board(5)
+
+# MAIN LOOP
+
+def start_game():
+    print("game start")
+
+
+def main():
+    print("\nWelcome to the Dungeon game! \n")
+
+    while True:
+        print("   Type 1 to play")
+        print("   Type QUIT to quit\n")
+
+        user = input("Enter option: ").upper()
+
+        if user == "1":
+            start_game()
+        elif user == "QUIT":
+            print("Thanks for playing!")
+            break
+        else:
+            print("Sorry, I don't understand {}".format(user))
+
+
+main()
