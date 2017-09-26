@@ -25,7 +25,7 @@ def draw_board(size):
         for col in range(size):
             board.append((col,row))
     
-    print(board)
+    #print(board)
 
 def set_locations():
     global monster, door, player
@@ -83,6 +83,17 @@ def move_player(locs, move):
     else:
         print("That is not a valid move.")
 
+def check_game_status():
+
+    if player == monster:
+        print("You have been eaten by the monster. Game Over.\n")
+    elif player == door:
+        print("You have made it the door - congratulations! You Win!\n")
+    else:
+        return True
+
+    return False
+
 
 # MAIN LOOP
 
@@ -105,7 +116,10 @@ def start_game():
 
         #check move / make move
         move_player(locs, move)
+
         #check win/lose
+        if not check_game_status():
+            break
 
 def main():
     print("\nWelcome to the Dungeon game! \n")
