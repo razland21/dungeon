@@ -11,7 +11,11 @@ import random
 #move player if valid
 #check win/loss
 #redraw board
+
+#variables
+size = 5
 board = []
+
 
 def draw_board(size):
     for row in range(size):
@@ -20,20 +24,78 @@ def draw_board(size):
     
     print(board)
 
-def get_locations():
-    monster = None
-    door = None
-    player = None
+def set_locations():
+    monster = random.choice(board)
+    door = random.choice(board)
+    player = random.choice(board)
+
+    while door == monster:
+        door = random.choice(board)
+
+    while player == monster or player == door:
+        player = random.choice(board)
 
     return monster, door, player
 
+def get_locations():
+    return monster, door, player
+
+
+def check_move_input(move):
+    moves = ["RIGHT", "LEFT", "UP", "DOWN"]
+
+    if move not in moves:
+        return False
+    
+    else:
+        return True
+
+
+def move_player(locs, move):
+    player_loc = locs[2]
+
+    #Right = col + 1
+    #Left = col - 1
+    #Up = row - 1
+    #Down = row + 1
+
+    if move == "RIGHT":
+        player_loc = (player_loc[0], player_loc[1]+1)
+    elif move == "LEFT":
+        player_loc = (player_loc[0], player_loc[1]-1)
+    elif move == "UP":
+        player_loc = (player_loc[0]-1, player_loc[1])
+    elif move == "DOWN":
+        player_loc = (player_loc[0]+1, player_loc[1])
+        
+
+    #check valid move
+    print(player_loc)
 
 
 # MAIN LOOP
 
 def start_game():
-    print("game start")
+    #later - can let player set board size
+    draw_board(size)
 
+    locs = set_locations()
+
+    print(locs)
+
+    while True:
+        print("You're currently in room {}.".format(locs[2]))
+        print("Select a move: RIGHT, LEFT, UP, DOWN\n")
+
+        move = input("Type move: ").upper()
+
+        if not check_move_input(move):
+            print("That is not a valid move input.\n")
+            continue
+
+        #check move / make move
+        move_player(locs, move)
+        #check win/lose
 
 def main():
     print("\nWelcome to the Dungeon game! \n")
